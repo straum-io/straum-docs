@@ -21,7 +21,7 @@ per node, and its name and meaning change only by a recorded decision.
 The authoritative list is in the broker's
 [docs/configuration.md](https://github.com/straum-io/straum/blob/main/docs/configuration.md#stable-metrics-d-141-a),
 where a test fails if the renderer and it disagree. This copy was taken
-at revision `4febc1c`.
+at revision `50224fe`.
 
 | Metric | Meaning |
 |---|---|

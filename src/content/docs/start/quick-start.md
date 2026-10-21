@@ -78,7 +78,7 @@ on purpose instead, send `SIGUSR1` to the leading node's process.
 | Symptom | Cause |
 |---|---|
 | The server exits at startup naming a variable | An unknown `STRAUM_*` variable or a value out of range. Nothing falls back to a default. |
-| The server refuses a non-loopback address | Every listener and peer stays on loopback unless `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1`. |
+| The server refuses a non-loopback address | Listeners and peers stay on loopback unless `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1`, or TLS secures them: the MQTT listener with client TLS and a password file, the links with node TLS. |
 | A node refuses a peer's link | The nodes disagree on peers, timing or limits: these go into a configuration digest each link checks. |
 | A node refuses its data directory | The directory belongs to another cluster's configuration. Use a fresh one. |
 | A CONNECT is refused | Persistent sessions, wills and session expiry are not supported yet. Connect with a clean session. |
