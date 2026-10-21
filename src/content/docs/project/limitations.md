@@ -10,9 +10,13 @@ it does not do, so you can decide before you rely on it.
 
 ## Security
 
-- **TLS and credentials only when configured.** Client TLS, a password
-  file, topic rules and node TLS are all off by default. See
-  [Configuration](../../reference/configuration/).
+TLS for clients and between nodes, credentials and topic rules work.
+They are off by default ([Configuration](../../reference/configuration/)).
+What they do not cover:
+
+- **No client certificate authentication.** Clients authenticate with a
+  user name and password; the server does not ask for a client
+  certificate.
 - **Metrics are plain HTTP** without credentials, on loopback unless
   `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1`.
 - **Loopback by default.** An address beyond loopback needs TLS (for
@@ -29,6 +33,7 @@ it does not do, so you can decide before you rely on it.
 - **Handshake floods on the link port** can keep links from forming. That
   costs availability, not safety; shield the port with a firewall.
 - **No enhanced authentication** (MQTT 5 AUTH).
+- **No independent security review** of the TLS and credential code yet.
 
 ## Protocol
 

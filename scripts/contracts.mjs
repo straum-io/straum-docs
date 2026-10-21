@@ -5,7 +5,7 @@
 // STRAUM_CONFIGURATION=<path> reads a local file instead of fetching.
 import { readFileSync, writeFileSync } from 'node:fs';
 
-const PIN = '0036c96fced7ed6d3a7476ce4e9a48a503aef053';
+const PIN = '0d10639f9f24aab37e0d51e597ff4c0b368e570f';
 const DOCS = new URL('../src/content/docs/reference/', import.meta.url);
 const page = (name) => new URL(name, DOCS);
 

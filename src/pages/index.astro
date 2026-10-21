@@ -29,7 +29,7 @@ const features = [
 	['Failover and handoff', 'A silent sequencer is taken over by the next node in a schedule every node knows. SIGUSR1 hands the role over on purpose.'],
 	['Bounded memory', 'Every queue and buffer has a limit and a stated behavior when full. A slow subscriber is closed, not allowed to grow the broker.'],
 	['Deterministic simulation', 'Three-node clusters run under a simulated network and disk, with safety invariants checked after every step.'],
-	['MQTT 3.1.1 and 5', 'One packet model with properties and reason codes. QoS 0 and 1, retained messages, MQTT 5 subscription options.'],
+	['MQTT 3.1.1 and 5', 'One packet model with properties and reason codes. QoS 0 and 1, retained messages, MQTT 5 subscription options. TLS, credentials and topic rules when you turn them on.'],
 ];
 
 // The latest published release (straum-io/straum releases, Docker Hub straumio/straum).
@@ -242,8 +242,8 @@ ${check}`,
 			<div class="wrap">
 			<aside class="status" aria-label="Project status">
 				<strong>Not production-ready.</strong>{' '}
-				TLS and credentials only when configured, flow control off, timing defaults are placeholders, and persistent
-				sessions and wills are refused. <a href={u('/project/limitations/')}>Read the limitations →</a>
+				Flow control off, failover and performance not yet confirmed by Linux measurements, timing defaults are
+				placeholders, and persistent sessions and wills are refused. <a href={u('/project/limitations/')}>Read the limitations →</a>
 			</aside>
 			</div>
 

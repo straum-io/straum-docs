@@ -164,4 +164,4 @@ Clients outside the cluster may rely on the variable names above, the
 in [MQTT support](../../reference/mqtt-support/#reason-codes). The
 authoritative lists are in the broker's
 [docs/configuration.md](https://github.com/straum-io/straum/blob/main/docs/configuration.md), each pinned by a test there.
-These pages copy them at revision `0036c96`.
+These pages copy them at revision `0d10639`.
