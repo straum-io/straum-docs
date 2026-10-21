@@ -2,30 +2,50 @@
 :root {
 	--sl-font: var(--st-font);
 	--sl-font-mono: var(--st-mono);
-	--sl-color-accent-low: #00343b;
-	--sl-color-accent: #00b8cc;
-	--sl-color-accent-high: #8ff3ff;
+	--sl-color-accent-low: #06303a;
+	--sl-color-accent: #22c7e6;
+	--sl-color-accent-high: #a5f3ff;
 	--sl-color-white: #ffffff;
-	--sl-color-gray-1: #eeeeee;
-	--sl-color-gray-2: #e0e0e0;
-	--sl-color-gray-3: #9ca3af;
-	--sl-color-gray-4: #6b6b6b;
-	--sl-color-gray-5: #404040;
-	--sl-color-gray-6: #2d2d2d;
-	--sl-color-black: #1a1a1a;
+	--sl-color-gray-1: #e8edf4;
+	--sl-color-gray-2: #c4cdd9;
+	--sl-color-gray-3: #9aa6b8;
+	--sl-color-gray-4: #5d6a7e;
+	--sl-color-gray-5: #263142;
+	--sl-color-gray-6: #121923;
+	--sl-color-black: #070a0f;
+	--sl-color-bg-nav: #0a0e14;
+	--sl-color-bg-sidebar: #0a0e14;
+	--sl-color-hairline: #1e2733;
+	--sl-color-hairline-light: #263142;
 }
 :root[data-theme='light'] {
-	--sl-color-accent-low: #c9eefa;
-	--sl-color-accent: #0077b3;
-	--sl-color-accent-high: #00405f;
-	--sl-color-white: #111827;
-	--sl-color-gray-1: #1f2937;
-	--sl-color-gray-2: #374151;
-	--sl-color-gray-3: #4b5563;
-	--sl-color-gray-4: #9ca3af;
-	--sl-color-gray-5: #d1d5db;
-	--sl-color-gray-6: #f3f4f6;
-	--sl-color-gray-7: #f9fafb;
+	--sl-color-accent-low: #d6effa;
+	--sl-color-accent: #0070a8;
+	--sl-color-accent-high: #003a57;
+	--sl-color-white: #0a1220;
+	--sl-color-gray-1: #172033;
+	--sl-color-gray-2: #2b374b;
+	--sl-color-gray-3: #445166;
+	--sl-color-gray-4: #8793a6;
+	--sl-color-gray-5: #cfd7e2;
+	--sl-color-gray-6: #eaeff5;
+	--sl-color-gray-7: #f5f7fa;
 	--sl-color-black: #ffffff;
+	--sl-color-bg-nav: #ffffff;
+	--sl-color-bg-sidebar: #f5f7fa;
+	--sl-color-hairline: #dce3ec;
+	--sl-color-hairline-light: #e6ebf2;
 }
-h1, h2, h3 { letter-spacing: -0.015em; }
+h1, h2, h3, .sl-markdown-content :is(h1, h2, h3) { font-family: var(--st-display); letter-spacing: -0.025em; }
+.sl-markdown-content h2 { padding-top: 0.25em; }
+:root:not([data-theme='light']) .sl-markdown-content :not(pre) > code { background: #121923; border: 1px solid #1e2733; }
+:root:not([data-theme='light']) .sl-markdown-content table th { background: #0d121a; }
+.site-title { color: var(--sl-color-white); font-family: var(--st-display); font-weight: 700; letter-spacing: -0.02em; }
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover,
+.sidebar-content a[aria-current='page']:focus {
+	background: var(--sl-color-accent-low);
+	color: var(--sl-color-accent-high);
+	box-shadow: inset 2px 0 0 var(--sl-color-accent);
+	font-weight: 600;
+}

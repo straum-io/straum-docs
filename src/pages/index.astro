@@ -66,7 +66,7 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 		<meta name="twitter:card" content="summary" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" />
 		<script is:inline>
 			// Same key and values as Starlight, so the choice carries over to the docs.
 			try {
@@ -78,9 +78,26 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 	</head>
 	<body>
 		<a class="skip" href="#main">Skip to content</a>
+		<svg class="stream" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+			<defs>
+				<linearGradient id="flow" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="0">
+					<stop offset="0" stop-color="var(--st-accent)" stop-opacity="0" />
+					<stop offset="0.45" stop-color="var(--st-accent)" />
+					<stop offset="0.8" stop-color="var(--st-accent-2)" />
+					<stop offset="1" stop-color="var(--st-accent-3)" stop-opacity="0" />
+				</linearGradient>
+			</defs>
+			{Array.from({ length: 9 }, (_, i) => (
+				<path
+					class="stream-line"
+					style={`--i:${i}`}
+					d={`M-40 ${470 + i * 22} C 320 ${380 + i * 30}, 620 ${640 - i * 14}, 980 ${470 + i * 9} S 1380 ${300 + i * 26}, 1500 ${330 + i * 20}`}
+				/>
+			))}
+		</svg>
 		<header class="nav wrap">
 			<a class="brand" href={u('/')} aria-label="Straum home">
-				<svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><rect width="32" height="32" rx="3" fill="#1A1A1A" /><path d="M11 7.7v18" stroke="#E0E0E0" stroke-width="2.4" stroke-linecap="round" /><path d="M11 7.7l8.5 7.5" stroke="#00E5FF" stroke-width="2.4" stroke-linecap="round" /><circle cx="11" cy="7.7" r="2.6" fill="#00E5FF" /><circle cx="19.5" cy="15.2" r="2.6" fill="#00E5FF" /><circle cx="19.5" cy="23.7" r="1.9" fill="#4A4A4A" /></svg>
+				<svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><rect width="32" height="32" rx="3" fill="#0B0F14" /><path d="M11 7.7v18" stroke="#E0E0E0" stroke-width="2.4" stroke-linecap="round" /><path d="M11 7.7l8.5 7.5" stroke="#00E5FF" stroke-width="2.4" stroke-linecap="round" /><circle cx="11" cy="7.7" r="2.6" fill="#00E5FF" /><circle cx="19.5" cy="15.2" r="2.6" fill="#00E5FF" /><circle cx="19.5" cy="23.7" r="1.9" fill="#3A4656" /></svg>
 				Straum
 			</a>
 			<nav aria-label="Main">
@@ -99,7 +116,7 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 				<div>
 					<p class="badge"><span class="dot"></span>Experimental · Apache 2.0</p>
 					<p class="kicker">Verifiable distributed MQTT</p>
-					<h1>Straum is a distributed MQTT broker written in Rust.</h1>
+					<h1>Straum is a <span class="grad">distributed MQTT broker</span> written in Rust.</h1>
 					<p class="lede">
 						It sends a PUBACK only after a majority of its nodes has committed the message to one replicated
 						log, so a three-node cluster keeps every acknowledged message when one node dies.
@@ -112,6 +129,16 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 
 				<figure class="diagram" aria-labelledby="diagram-cap">
 					<svg viewBox="0 0 420 300" role="img" aria-label="A publish goes from a client through a gateway to the sequencer, which replicates it to three logs; the PUBACK returns once two of three hold it.">
+						<defs>
+							<linearGradient id="wire" gradientUnits="userSpaceOnUse" x1="100" y1="0" x2="300" y2="0">
+								<stop offset="0" stop-color="var(--st-accent)" />
+								<stop offset="1" stop-color="var(--st-accent-2)" />
+							</linearGradient>
+							<filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="420" height="300">
+								<feGaussianBlur stdDeviation="3" result="b" />
+								<feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+							</filter>
+						</defs>
 						<g class="lbl">
 							<text x="20" y="34">client</text>
 							<text x="150" y="34">sequencer</text>
@@ -154,7 +181,8 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 			</div>
 
 			<section class="why wrap">
-				<h2>What a PUBACK means</h2>
+				<p class="eyebrow"><span>01</span>The guarantee</p>
+					<h2>What a PUBACK means</h2>
 				<div class="compare">
 					<div class="card">
 						<p class="kicker">Single-node broker</p>
@@ -168,10 +196,12 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 			</section>
 
 			<section class="wrap">
-				<h2>What it does</h2>
+				<p class="eyebrow"><span>02</span>Capabilities</p>
+					<h2>What it does</h2>
 				<div class="grid">
-					{features.map(([h, p]) => (
-						<article class="card">
+					{features.map(([h, p], i) => (
+						<article class="card feature">
+							<span class="num">{String(i + 1).padStart(2, '0')}</span>
 							<h3>{h}</h3>
 							<p>{p}</p>
 						</article>
@@ -182,6 +212,7 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 
 			<section class="wrap qs">
 				<div>
+					<p class="eyebrow"><span>03</span>Quick start</p>
 					<h2>Three nodes on one machine</h2>
 					<p>You need Rust 1.85 or newer. There is no single-node mode: a cluster starts at three.</p>
 					<p>Every node takes clients. Publish to one, subscribe on another, and run <code>straum-cli status</code> to see who sequences the log.</p>
@@ -194,7 +225,8 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 			</section>
 
 			<section class="wrap">
-				<h2>The ecosystem</h2>
+				<p class="eyebrow"><span>04</span>Ecosystem</p>
+					<h2>The ecosystem</h2>
 				<div class="grid three">
 					<a class="card link" href={`${gh}/straum`}>
 						<p class="kicker">Rust · experimental</p>
@@ -215,7 +247,8 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 			</section>
 
 			<section class="wrap others">
-				<h2>Compared with others</h2>
+				<p class="eyebrow"><span>05</span>Honest comparison</p>
+					<h2>Compared with others</h2>
 				<p>
 					Need a broker in production today? Use Mosquitto on a single node, or a clustered broker such as EMQX,
 					VerneMQ or HiveMQ. Straum is for people who want an MQTT cluster whose behavior follows from one log, without
