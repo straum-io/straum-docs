@@ -16,10 +16,10 @@ Configuration, and "Not exposed by the core", which lists what the console
 cannot show yet and the broker change that would let it.
 :::
 
-![The Overview screen of a three-node cluster: two nodes observed, node 0 reporting leading; node 2 unknown after it was stopped, its last values dimmed with their age; recent events: node 2 unreachable, a leading change after a handoff, the highest slot changing](../../../assets/console-overview.png)
+![The Overview of a three-node cluster on one machine: node 1 reports leading; node 2 is unknown after it was stopped and keeps its last values, dimmed, with their age; recent events: node 2 unreachable, a marker where the console restarted, a leading change after a handoff](../../../assets/console-overview.png)
 
-*A three-node cluster on one machine, after a handoff and with node 2
-stopped.*
+*Overview: a three-node cluster on one machine, after a handoff, with node
+2 stopped. Every value says when it was read.*
 
 ## What it is for
 
@@ -44,6 +44,54 @@ The console shows it on one live page.
 
 It runs outside the broker process: the broker will never have a
 management UI built in.
+
+## A tour
+
+Each page shows the same live state, one round at a time; nothing on them
+is a health verdict. The screenshots are of a real three-node cluster,
+taken at different moments, so who leads and who is down differ between them.
+
+**Cluster & Leader.** One row per node with every stable value it
+reports. Positions are per node and never added up; a node that does not
+answer keeps its last values, dimmed, with their age.
+
+![Cluster & Leader: three rows, node 1 unknown and dimmed, its values 36.8 s old](../../../assets/console/cluster.png)
+
+**Replication & Durability.** Local durability (fsync on this node) and
+quorum durability (committed by a majority, as this node knows it) in
+separate columns, because a locally durable record is not yet committed.
+The two "not yet" columns are computed by the console and say so.
+
+![Replication & Durability: durable through, not yet synced, commit, not yet committed, per node](../../../assets/console/durability.png)
+
+**Events.** What changed between two rounds: a node stopping or starting to
+answer, a change of who reports leading or of the highest slot, `serving`
+flipping, lag starting or clearing, a full outbox. A gap is marked when
+events were missed or the console restarted.
+
+![Events, filtered by "leading": one leading change from node 2 to node 0 at slot 7, "1 of 3 events match"](../../../assets/console/events-filtered.png)
+
+**Configuration.** The console's own settings, whether each node reports
+the id it was given, and the 11 metrics the broker declares stable, which
+are the only ones the console reads.
+
+![Configuration: 3 nodes, 1.0 s between polls, 500 ms to wait for each; every node matches its id and renders 11 of 11 stable series, node 1 from its last values while it is unknown](../../../assets/console/config.png)
+
+**Not exposed by the core.** What an operator would want and the console
+cannot show yet, why, and the broker change that would provide it.
+
+![Not exposed by the core: rows grouped by the page they would belong to](../../../assets/console/not-exposed.png)
+
+### Keys and the filter
+
+`1`–`6` open the pages, `/` puts the cursor in the filter, `Esc` clears it,
+`t` switches between dark and light, and `?` lists the keys. The filter
+narrows whatever the page lists (nodes by id, address, state or error;
+events by name, node or text) and stays in the URL, so a filtered view
+such as `#/events?q=leading` can be shared. Gap markers stay visible under a
+filter, so a filtered list never looks complete when events were missed.
+
+![The keyboard shortcuts dialog over the Overview](../../../assets/console/keys.png)
 
 ## Try it
 
