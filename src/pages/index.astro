@@ -1,0 +1,254 @@
+---
+import '../styles/tokens.css';
+import '../styles/landing.css';
+
+const title = 'Straum: distributed MQTT broker in Rust with majority commit';
+const description =
+	'Straum is an experimental, clustered MQTT 3.1.1 and 5 broker in Rust. It sends a PUBACK only after a majority of its nodes has committed the message to one replicated log.';
+const canonical = new URL(import.meta.env.BASE_URL, Astro.site).href;
+const gh = 'https://github.com/straum-io';
+// Root-relative paths, prefixed with the base the site is served under.
+const u = (path: string) => import.meta.env.BASE_URL.replace(/\/$/, '') + path;
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'SoftwareApplication',
+	name: 'Straum',
+	description,
+	applicationCategory: 'DeveloperApplication',
+	operatingSystem: 'Linux',
+	programmingLanguage: 'Rust',
+	license: 'https://www.apache.org/licenses/LICENSE-2.0',
+	codeRepository: `${gh}/straum`,
+	offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+
+const features = [
+	['Majority commit', 'The PUBACK goes out once a majority of nodes holds the record durably. Lose one node of three and every acknowledged message is still there.'],
+	['One log decides', 'Deliveries, retained messages and sequencer changes are all results of applying committed records. Nodes with the same log hold the same state.'],
+	['Failover and handoff', 'A silent sequencer is taken over by the next node in a schedule every node knows. SIGUSR1 hands the role over on purpose.'],
+	['Bounded memory', 'Every queue and buffer has a limit and a stated behavior when full. A slow subscriber is closed, not allowed to grow the broker.'],
+	['Deterministic simulation', 'Three-node clusters run under a simulated network and disk, with safety invariants checked after every step.'],
+	['MQTT 3.1.1 and 5', 'One packet model with properties and reason codes. QoS 0 and 1, retained messages, MQTT 5 subscription options.'],
+];
+
+const quickstart = `cargo build --release -p server --bin straum-server
+
+export STRAUM_EXPERIMENTAL_CLUSTER=1
+export STRAUM_CLUSTER_PEERS=0=127.0.0.1:7000,1=127.0.0.1:7001,2=127.0.0.1:7002
+for i in 0 1 2; do
+  STRAUM_CLUSTER_NODE_ID=$i \\
+  STRAUM_CLUSTER_DATA_DIR=/tmp/straum/n$i \\
+  STRAUM_CLUSTER_MQTT_LISTEN=127.0.0.1:188$((3 + i)) \\
+  STRAUM_CLUSTER_METRICS_LISTEN=127.0.0.1:910$i \\
+  target/release/straum-server &
+done
+
+# once every node shows SERVING 1:
+straum-cli status --node 127.0.0.1:9100,127.0.0.1:9101,127.0.0.1:9102
+straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		<link rel="icon" href={u('/favicon.svg')} type="image/svg+xml" />
+		<link rel="sitemap" href={u('/sitemap-index.xml')} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta name="twitter:card" content="summary" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" />
+		<script is:inline>
+			// Same key and values as Starlight, so the choice carries over to the docs.
+			try {
+				const t = localStorage.getItem('starlight-theme');
+				document.documentElement.dataset.theme = t === 'light' || t === 'dark' ? t : matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+			} catch { document.documentElement.dataset.theme = 'dark'; }
+		</script>
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+	</head>
+	<body>
+		<a class="skip" href="#main">Skip to content</a>
+		<header class="nav wrap">
+			<a class="brand" href={u('/')} aria-label="Straum home">
+				<svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><rect width="32" height="32" rx="3" fill="#1A1A1A" /><path d="M11 7.7v18" stroke="#E0E0E0" stroke-width="2.4" stroke-linecap="round" /><path d="M11 7.7l8.5 7.5" stroke="#00E5FF" stroke-width="2.4" stroke-linecap="round" /><circle cx="11" cy="7.7" r="2.6" fill="#00E5FF" /><circle cx="19.5" cy="15.2" r="2.6" fill="#00E5FF" /><circle cx="19.5" cy="23.7" r="1.9" fill="#4A4A4A" /></svg>
+				Straum
+			</a>
+			<nav aria-label="Main">
+				<a href={u('/start/introduction/')}>Docs</a>
+				<a href={u('/concepts/architecture/')}>Architecture</a>
+				<a href={u('/project/limitations/')}>Limitations</a>
+				<a href={`${gh}/straum`}>GitHub</a>
+				<button class="theme" type="button" aria-label="Toggle light and dark theme">
+					<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 0 18V3Z" /><circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+				</button>
+			</nav>
+		</header>
+
+		<main id="main">
+			<section class="hero wrap">
+				<div>
+					<p class="badge"><span class="dot"></span>Experimental · Apache 2.0</p>
+					<p class="kicker">Verifiable distributed MQTT</p>
+					<h1>Straum is a distributed MQTT broker written in Rust.</h1>
+					<p class="lede">
+						It sends a PUBACK only after a majority of its nodes has committed the message to one replicated
+						log, so a three-node cluster keeps every acknowledged message when one node dies.
+					</p>
+					<div class="ctas">
+						<a class="btn primary" href={u('/start/quick-start/')}>Read the docs</a>
+						<a class="btn" href={`${gh}/straum`}>View on GitHub</a>
+					</div>
+				</div>
+
+				<figure class="diagram" aria-labelledby="diagram-cap">
+					<svg viewBox="0 0 420 300" role="img" aria-label="A publish goes from a client through a gateway to the sequencer, which replicates it to three logs; the PUBACK returns once two of three hold it.">
+						<g class="lbl">
+							<text x="20" y="34">client</text>
+							<text x="150" y="34">sequencer</text>
+							<text x="300" y="34">logs</text>
+						</g>
+						<circle class="pkt" r="5" cx="0" cy="0">
+							<animateMotion dur="3s" repeatCount="indefinite" path="M100 150 H296" />
+						</circle>
+						<rect class="box" x="16" y="128" width="84" height="44" />
+						<text class="mono" x="58" y="155" text-anchor="middle">PUBLISH</text>
+						<rect class="box hot" x="146" y="128" width="104" height="44" />
+						<text class="mono" x="198" y="155" text-anchor="middle">slot k</text>
+						<path class="wire" d="M100 150 H146" />
+						<path class="wire" d="M250 150 C270 150 270 70 296 70" />
+						<path class="wire" d="M250 150 H296" />
+						<path class="wire dim" d="M250 150 C270 150 270 230 296 230" />
+						{[70, 150, 230].map((y, i) => (
+							<g>
+								<rect class={i < 2 ? 'box hot' : 'box'} x="296" y={y - 20} width="108" height="40" />
+								<text class="mono" x="306" y={y + 5}>node {i}</text>
+								{[0, 1, 2, 3].map((j) => (
+									<rect class={i < 2 || j < 2 ? 'cell' : 'cell empty'} x={360 + j * 10} y={y - 6} width="7" height="12" />
+								))}
+							</g>
+						))}
+						<path class="ack" d="M146 190 H100" />
+						<text class="mono ack-t" x="123" y="210" text-anchor="middle">PUBACK</text>
+						<text class="note" x="198" y="285" text-anchor="middle">2 of 3 durable = committed</text>
+					</svg>
+					<figcaption id="diagram-cap">The PUBACK leaves only after a majority holds the record.</figcaption>
+				</figure>
+			</section>
+
+			<div class="wrap">
+			<aside class="status" aria-label="Project status">
+				<strong>Not production-ready.</strong>{' '}
+				No TLS or credentials yet, flow control off, timing defaults are placeholders, and persistent sessions and
+				wills are refused. <a href={u('/project/limitations/')}>Read the limitations →</a>
+			</aside>
+			</div>
+
+			<section class="why wrap">
+				<h2>What a PUBACK means</h2>
+				<div class="compare">
+					<div class="card">
+						<p class="kicker">Single-node broker</p>
+						<p>One machine has your message. If its disk or host is lost before you notice, so is the message.</p>
+					</div>
+					<div class="card accent">
+						<p class="kicker">Straum, three nodes</p>
+						<p>The message is in the committed log of at least two machines. Any one can die and every acknowledged message is still there.</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="wrap">
+				<h2>What it does</h2>
+				<div class="grid">
+					{features.map(([h, p]) => (
+						<article class="card">
+							<h3>{h}</h3>
+							<p>{p}</p>
+						</article>
+					))}
+				</div>
+				<p class="more"><a href={u('/reference/mqtt-support/')}>Full MQTT feature matrix →</a></p>
+			</section>
+
+			<section class="wrap qs">
+				<div>
+					<h2>Three nodes on one machine</h2>
+					<p>You need Rust 1.85 or newer. There is no single-node mode: a cluster starts at three.</p>
+					<p>Every node takes clients. Publish to one, subscribe on another, and run <code>straum-cli status</code> to see who sequences the log.</p>
+					<a class="btn primary" href={u('/start/quick-start/')}>Full quick start</a>
+				</div>
+				<div class="term">
+					<div class="term-bar"><span></span><span></span><span></span><button type="button" class="copy" data-copy={quickstart}>Copy</button></div>
+					<pre><code>{quickstart}</code></pre>
+				</div>
+			</section>
+
+			<section class="wrap">
+				<h2>The ecosystem</h2>
+				<div class="grid three">
+					<a class="card link" href={`${gh}/straum`}>
+						<p class="kicker">Rust · experimental</p>
+						<h3>straum</h3>
+						<p>The broker. Docker image, Debian packages and a Kubernetes package.</p>
+					</a>
+					<a class="card link" href={u('/ecosystem/straum-cli/')}>
+						<p class="kicker">Go · experimental</p>
+						<h3>straum-cli</h3>
+						<p>Publish, subscribe and read every node's state, with exit codes that tell "committed" from "outcome unknown".</p>
+					</a>
+					<a class="card link" href={u('/ecosystem/straum-console/')}>
+						<p class="kicker">Web · not started</p>
+						<h3>straum-console</h3>
+						<p>The planned cluster console, outside the broker process. Its read-only API schema is defined.</p>
+					</a>
+				</div>
+			</section>
+
+			<section class="wrap others">
+				<h2>Compared with others</h2>
+				<p>
+					Need a broker in production today? Use Mosquitto on a single node, or a clustered broker such as EMQX,
+					VerneMQ or HiveMQ. Straum is for people who want an MQTT cluster whose behavior follows from one log, without
+					a JVM or BEAM runtime, and want to follow or help with getting there.
+				</p>
+			</section>
+		</main>
+
+		<footer class="foot">
+			<div class="wrap">
+				<span>Straum · Apache License 2.0</span>
+				<nav aria-label="Footer">
+					<a href={u('/start/introduction/')}>Docs</a>
+					<a href={u('/project/benchmarks/')}>Benchmarks</a>
+					<a href={`${gh}/straum`}>GitHub</a>
+					<a href={`${gh}/straum/issues`}>Issues</a>
+				</nav>
+			</div>
+		</footer>
+
+		<script>
+			document.querySelector('.theme')?.addEventListener('click', () => {
+				const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+				document.documentElement.dataset.theme = next;
+				try { localStorage.setItem('starlight-theme', next); } catch {}
+			});
+			document.querySelectorAll<HTMLButtonElement>('.copy').forEach((b) =>
+				b.addEventListener('click', async () => {
+					await navigator.clipboard.writeText(b.dataset.copy ?? '');
+					b.textContent = 'Copied';
+					setTimeout(() => (b.textContent = 'Copy'), 1500);
+				}),
+			);
+		</script>
+	</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "straum-docs",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node scripts/contracts.mjs && astro build",
+    "check": "npm run build && node scripts/check-links.mjs",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.42.6",
+    "astro": "^7.4.1"
+  }
+}
