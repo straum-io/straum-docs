@@ -33,7 +33,7 @@ const features = [
 ];
 
 // The latest published release (straum-io/straum releases, Docker Hub straumio/straum).
-const release = '0.1.0-rc.2';
+const release = '0.1.0-rc.3';
 const cli = 'go install github.com/straum-io/straum-cli@latest   # Go 1.26 or newer';
 const check = `straum-cli status --node 127.0.0.1:9100,127.0.0.1:9101,127.0.0.1:9102   # wait for SERVING 1
 straum-cli sub --broker 127.0.0.1:1884 -t 'sensors/+' -v &
@@ -67,11 +67,14 @@ ${check}`,
 	},
 	{
 		id: 'deb',
-		label: 'Debian',
-		note: 'Debian 12 or Ubuntu 22.04 and newer: one node per host, as a systemd service. Repeat on three hosts.',
-		code: `# 1. Install (amd64; arm64 is next to it in the release)
-curl -LO https://github.com/straum-io/straum/releases/download/v${release}/straum_${release.replace('-', '.')}_amd64.deb
-sudo apt install ./straum_${release.replace('-', '.')}_amd64.deb
+		label: 'apt',
+		note: 'Ubuntu or Debian: one node per host, as a systemd service. Repeat on three hosts.',
+		code: `# 1. Install: Ubuntu 22.04, 24.04 or 26.04 (amd64, arm64)
+sudo add-apt-repository ppa:straum/ppa
+sudo apt install straum
+#    Debian 12: the package from the release instead
+#    curl -LO https://github.com/straum-io/straum/releases/download/v${release}/straum_${release.replace('-', '.')}_amd64.deb
+#    sudo apt install ./straum_${release.replace('-', '.')}_amd64.deb
 
 # 2. Configure this node and start it
 sudoedit /etc/default/straum   # node id, peers, listen addresses
@@ -277,7 +280,7 @@ ${check}`,
 					<ol class="steps">
 						<li>
 							<h3>Install</h3>
-							<p>Pull the image, install the <code>.deb</code>, or build from source. Add <code>straum-cli</code> to talk to it.</p>
+							<p>Pull the image, install from the Ubuntu PPA, or build from source. Add <code>straum-cli</code> to talk to it.</p>
 						</li>
 						<li>
 							<h3>Start three nodes</h3>

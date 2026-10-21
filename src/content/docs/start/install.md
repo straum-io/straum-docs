@@ -1,6 +1,6 @@
 ---
 title: Install
-description: Run Straum from the Docker image, the Debian packages, or on Kubernetes with the Kustomize package.
+description: Run Straum from the Docker image, the Ubuntu PPA or Debian packages, or on Kubernetes with the Kustomize package.
 sidebar:
   order: 3
 ---
@@ -23,8 +23,8 @@ non-root user. Release candidates are on Docker Hub as
 `linux/amd64` and `linux/arm64`, with provenance and an SBOM attached:
 
 ```sh
-docker pull straumio/straum:0.1.0-rc.2
-docker tag straumio/straum:0.1.0-rc.2 straum
+docker pull straumio/straum:0.1.0-rc.3
+docker tag straumio/straum:0.1.0-rc.3 straum
 ```
 
 Or build it from a checkout of
@@ -61,21 +61,27 @@ the node does not resolve host names.
 
 ## Debian and Ubuntu
 
-Each [GitHub release](https://github.com/straum-io/straum/releases) has
-`.deb` packages for amd64 and arm64 (Debian 12, Ubuntu 22.04 and newer)
-with `SHA256SUMS` and build provenance. The latest is `v0.1.0-rc.2`:
+On Ubuntu 22.04, 24.04 and 26.04, the PPA keeps Straum up to date (amd64
+and arm64):
 
 ```sh
-curl -LO https://github.com/straum-io/straum/releases/download/v0.1.0-rc.2/straum_0.1.0.rc.2_amd64.deb
+sudo add-apt-repository ppa:straum/ppa
+sudo apt install straum
 ```
 
-An Ubuntu PPA (`ppa:straum/straum`) is planned but not published yet.
-
-The package installs `/usr/bin/straum-server`, a `straum` systemd
-service and its settings file. It starts nothing by itself:
+Otherwise each [GitHub release](https://github.com/straum-io/straum/releases)
+has `.deb` packages for amd64 and arm64 (Debian 12, Ubuntu 22.04 and newer)
+with `SHA256SUMS` and build provenance. The latest is `v0.1.0-rc.3`:
 
 ```sh
-sudo apt install ./straum_<version>_<arch>.deb
+curl -LO https://github.com/straum-io/straum/releases/download/v0.1.0-rc.3/straum_0.1.0.rc.3_amd64.deb
+sudo apt install ./straum_0.1.0.rc.3_amd64.deb
+```
+
+Either way the package installs `/usr/bin/straum-server`, a `straum`
+systemd service and its settings file. It starts nothing by itself:
+
+```sh
 sudoedit /etc/default/straum          # node id, peers, listen addresses
 sudo systemctl enable --now straum
 ```
