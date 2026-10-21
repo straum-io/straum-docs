@@ -1,11 +1,11 @@
-# straum-docs
+# straum-io.github.io
 
 The website for [Straum](https://github.com/straum-io/straum): the landing
 page and the documentation for the broker,
 [straum-cli](https://github.com/straum-io/straum-cli) and
 [straum-console](https://github.com/straum-io/straum-console).
 
-Live at https://straum-io.github.io/straum-docs/. Built with
+Live at https://straum-io.github.io/. Built with
 [Astro](https://astro.build) and [Starlight](https://starlight.astro.build):
 static HTML, a sitemap and a local search index.
 
@@ -28,9 +28,8 @@ straum revision, change `PIN` and run the build. Offline, point
 `STRAUM_CONFIGURATION` at a local copy of that file.
 
 A push to `main` deploys to GitHub Pages (`.github/workflows/site.yml`).
-A project Pages site cannot serve `robots.txt` at the domain root, so there
-is none; the sitemap is linked from every page's head. Both change with a
-custom domain.
+The repository is named `straum-io.github.io` so that GitHub Pages serves
+it at the account root.
 
 ## Where things are
 
@@ -41,8 +40,8 @@ custom domain.
 | `src/styles/tokens.css` | Brand colors and fonts, shared by the landing page and the docs |
 | `src/styles/starlight.css` | The tokens mapped onto Starlight's theme |
 | `scripts/` | The contract check and the link check |
-| `public/` | Favicon, `llms.txt` |
-| `astro.config.mjs` | Site URL and base path, sidebar, head tags |
+| `public/` | Favicon, `robots.txt`, `llms.txt` |
+| `astro.config.mjs` | Site URL, sidebar, head tags |
 
 ## Writing rules
 
@@ -50,7 +49,7 @@ custom domain.
   repository at the revision you document. Link to the source when the
   page would otherwise go stale.
 - Links between docs pages are relative (`../../start/quick-start/`), so
-  they work under the base path.
+  they survive a move of the site.
 - Straum is experimental: say so wherever a reader could assume otherwise.
 - No performance claim without a published Linux measurement.
 

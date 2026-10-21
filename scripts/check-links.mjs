@@ -1,9 +1,9 @@
 // Every same-site href and src in the built site, relative or root-relative,
-// must resolve under the base to a file in dist/.
+// must resolve to a file in dist/.
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const base = '/straum-docs/';
+const base = '/';
 const origin = 'https://site.invalid';
 const dist = new URL('../dist/', import.meta.url).pathname;
 const broken = new Set();
