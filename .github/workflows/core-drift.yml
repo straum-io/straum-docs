@@ -1,0 +1,27 @@
+name: core-drift
+
+# Daily: has straum main moved past the revision the site pins
+# (scripts/contracts.mjs) in docs/configuration.md or the README's status
+# lines? If so, one open Issue labelled core-drift says what moved and what
+# the contract check reports against main; once the pin catches up, it is
+# closed. The site itself is not changed here.
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: scripts/core-drift.sh
