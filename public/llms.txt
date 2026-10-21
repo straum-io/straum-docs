@@ -1,6 +1,6 @@
 # Straum
 
-> Straum is an experimental, clustered MQTT 3.1.1 and 5 broker written in Rust. It sends a PUBACK only after a majority of its nodes has committed the message to one replicated log. It is not production-ready: no TLS or authentication, QoS 2, persistent sessions, wills and shared subscriptions are not supported, and a cluster needs at least three nodes.
+> Straum is an experimental, clustered MQTT 3.1.1 and 5 broker. It sends a PUBACK only after a majority of its nodes has committed the message to one replicated log. It is not production-ready: no TLS or authentication, QoS 2, persistent sessions, wills and shared subscriptions are not supported, and a cluster needs at least three nodes.
 
 ## Docs
 
@@ -17,6 +17,6 @@
 
 ## Projects
 
-- [straum](https://github.com/straum-io/straum): the broker (Rust, Apache 2.0)
+- [straum](https://github.com/straum-io/straum): the broker (Apache 2.0)
 - [straum-cli](https://github.com/straum-io/straum-cli): terminal client (Go)
 - [straum-console](https://github.com/straum-io/straum-console): planned web console, not started

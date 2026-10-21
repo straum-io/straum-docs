@@ -11,7 +11,7 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Straum',
-			description: 'Straum is a clustered MQTT broker in Rust that acknowledges a publish only after a majority of its nodes has committed it.',
+			description: 'Straum is a clustered MQTT broker that acknowledges a publish only after a majority of its nodes has committed it.',
 			logo: { src: './src/assets/mark.svg', alt: 'Straum' },
 			favicon: '/favicon.svg',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/straum-io/straum' }],
