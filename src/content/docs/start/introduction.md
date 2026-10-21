@@ -1,11 +1,11 @@
 ---
 title: What is Straum
-description: Straum is a clustered MQTT broker in Rust that sends a PUBACK only after a majority of its nodes has committed the message.
+description: Straum is a clustered MQTT broker that sends a PUBACK only after a majority of its nodes has committed the message.
 sidebar:
   order: 1
 ---
 
-Straum is a distributed MQTT broker written in Rust. A Straum cluster
+Straum is a distributed MQTT broker. A Straum cluster
 acknowledges a publish only after a majority of its nodes has committed
 it to one replicated log.
 

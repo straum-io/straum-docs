@@ -2,9 +2,9 @@
 import '../styles/tokens.css';
 import '../styles/landing.css';
 
-const title = 'Straum: distributed MQTT broker in Rust with majority commit';
+const title = 'Straum: distributed MQTT broker with majority commit';
 const description =
-	'Straum is an experimental, clustered MQTT 3.1.1 and 5 broker in Rust. It sends a PUBACK only after a majority of its nodes has committed the message to one replicated log.';
+	'Straum is an experimental, clustered MQTT 3.1.1 and 5 broker. It sends a PUBACK only after a majority of its nodes has committed the message to one replicated log.';
 const canonical = new URL(import.meta.env.BASE_URL, Astro.site).href;
 const gh = 'https://github.com/straum-io';
 // Root-relative paths, prefixed with the base the site is served under.
@@ -116,7 +116,7 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 				<div>
 					<p class="badge"><span class="dot"></span>Experimental · Apache 2.0</p>
 					<p class="kicker">Verifiable distributed MQTT</p>
-					<h1>Straum is a <span class="grad">distributed MQTT broker</span> written in Rust.</h1>
+					<h1>Straum is a <span class="grad">distributed MQTT broker</span> that commits before it acknowledges.</h1>
 					<p class="lede">
 						It sends a PUBACK only after a majority of its nodes has committed the message to one replicated
 						log, so a three-node cluster keeps every acknowledged message when one node dies.
@@ -229,17 +229,17 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 					<h2>The ecosystem</h2>
 				<div class="grid three">
 					<a class="card link" href={`${gh}/straum`}>
-						<p class="kicker">Rust · experimental</p>
+						<p class="kicker">Broker · experimental</p>
 						<h3>straum</h3>
 						<p>The broker. Docker image, Debian packages and a Kubernetes package.</p>
 					</a>
 					<a class="card link" href={u('/ecosystem/straum-cli/')}>
-						<p class="kicker">Go · experimental</p>
+						<p class="kicker">CLI · experimental</p>
 						<h3>straum-cli</h3>
 						<p>Publish, subscribe and read every node's state, with exit codes that tell "committed" from "outcome unknown".</p>
 					</a>
 					<a class="card link" href={u('/ecosystem/straum-console/')}>
-						<p class="kicker">Web · not started</p>
+						<p class="kicker">Console · not started</p>
 						<h3>straum-console</h3>
 						<p>The planned cluster console, outside the broker process. Its read-only API schema is defined.</p>
 					</a>
