@@ -4,16 +4,16 @@
 
 ## Docs
 
-- [What is Straum](https://straum-io.github.io/straum-docs/start/introduction/): purpose, status, feature table, comparison
-- [Quick start](https://straum-io.github.io/straum-docs/start/quick-start/): a three-node cluster on one machine
-- [Install](https://straum-io.github.io/straum-docs/start/install/): Docker, Debian packages, Kubernetes
-- [Architecture](https://straum-io.github.io/straum-docs/concepts/architecture/): gateway and sequencer, slots, majority commit, handoff and takeover
-- [Guarantees](https://straum-io.github.io/straum-docs/concepts/guarantees/): what a PUBACK means, memory bounds, failure behavior
-- [Configuration](https://straum-io.github.io/straum-docs/reference/configuration/): every STRAUM_* variable and fixed limit
-- [Metrics](https://straum-io.github.io/straum-docs/reference/metrics/): the stable Prometheus metrics
-- [MQTT support](https://straum-io.github.io/straum-docs/reference/mqtt-support/): feature matrix and reason codes
-- [Limitations](https://straum-io.github.io/straum-docs/project/limitations/): what Straum does not do yet
-- [Benchmarks](https://straum-io.github.io/straum-docs/project/benchmarks/): methodology; no figures published yet
+- [What is Straum](https://straum-io.github.io/start/introduction/): purpose, status, feature table, comparison
+- [Quick start](https://straum-io.github.io/start/quick-start/): a three-node cluster on one machine
+- [Install](https://straum-io.github.io/start/install/): Docker, Debian packages, Kubernetes
+- [Architecture](https://straum-io.github.io/concepts/architecture/): gateway and sequencer, slots, majority commit, handoff and takeover
+- [Guarantees](https://straum-io.github.io/concepts/guarantees/): what a PUBACK means, memory bounds, failure behavior
+- [Configuration](https://straum-io.github.io/reference/configuration/): every STRAUM_* variable and fixed limit
+- [Metrics](https://straum-io.github.io/reference/metrics/): the stable Prometheus metrics
+- [MQTT support](https://straum-io.github.io/reference/mqtt-support/): feature matrix and reason codes
+- [Limitations](https://straum-io.github.io/project/limitations/): what Straum does not do yet
+- [Benchmarks](https://straum-io.github.io/project/benchmarks/): methodology; no figures published yet
 
 ## Projects
 

@@ -2,14 +2,12 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
-// GitHub Pages (ECO-D-13). Sitemap and canonical URLs use both.
+// GitHub Pages at the account root (ECO-D-13, amended). Sitemap and canonical URLs use it.
 const site = 'https://straum-io.github.io';
-const base = '/straum-docs';
 
 
 export default defineConfig({
 	site,
-	base,
 	integrations: [
 		starlight({
 			title: 'Straum',
@@ -17,7 +15,7 @@ export default defineConfig({
 			logo: { src: './src/assets/mark.svg', alt: 'Straum' },
 			favicon: '/favicon.svg',
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/straum-io/straum' }],
-			editLink: { baseUrl: 'https://github.com/straum-io/straum-docs/edit/main/' },
+			editLink: { baseUrl: 'https://github.com/straum-io/straum-io.github.io/edit/main/' },
 			customCss: ['./src/styles/tokens.css', './src/styles/starlight.css'],
 			head: [
 				{ tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },

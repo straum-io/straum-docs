@@ -1,6 +1,6 @@
 ## Issue ID
 
-<!--ISSUE-->https://github.com/straum-io/straum-docs/issues/NUMBER<!--/ISSUE-->
+<!--ISSUE-->https://github.com/straum-io/straum-io.github.io/issues/NUMBER<!--/ISSUE-->
 
 ## Scope
 
