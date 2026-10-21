@@ -1,0 +1,22 @@
+# Straum
+
+> Straum is an experimental, clustered MQTT 3.1.1 and 5 broker written in Rust. It sends a PUBACK only after a majority of its nodes has committed the message to one replicated log. It is not production-ready: no TLS or authentication, QoS 2, persistent sessions, wills and shared subscriptions are not supported, and a cluster needs at least three nodes.
+
+## Docs
+
+- [What is Straum](https://straum-io.github.io/straum-docs/start/introduction/): purpose, status, feature table, comparison
+- [Quick start](https://straum-io.github.io/straum-docs/start/quick-start/): a three-node cluster on one machine
+- [Install](https://straum-io.github.io/straum-docs/start/install/): Docker, Debian packages, Kubernetes
+- [Architecture](https://straum-io.github.io/straum-docs/concepts/architecture/): gateway and sequencer, slots, majority commit, handoff and takeover
+- [Guarantees](https://straum-io.github.io/straum-docs/concepts/guarantees/): what a PUBACK means, memory bounds, failure behavior
+- [Configuration](https://straum-io.github.io/straum-docs/reference/configuration/): every STRAUM_* variable and fixed limit
+- [Metrics](https://straum-io.github.io/straum-docs/reference/metrics/): the stable Prometheus metrics
+- [MQTT support](https://straum-io.github.io/straum-docs/reference/mqtt-support/): feature matrix and reason codes
+- [Limitations](https://straum-io.github.io/straum-docs/project/limitations/): what Straum does not do yet
+- [Benchmarks](https://straum-io.github.io/straum-docs/project/benchmarks/): methodology; no figures published yet
+
+## Projects
+
+- [straum](https://github.com/straum-io/straum): the broker (Rust, Apache 2.0)
+- [straum-cli](https://github.com/straum-io/straum-cli): terminal client (Go)
+- [straum-console](https://github.com/straum-io/straum-console): planned web console, not started

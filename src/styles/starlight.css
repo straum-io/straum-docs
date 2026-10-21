@@ -1,0 +1,31 @@
+/* Map the brand tokens onto Starlight's palette. */
+:root {
+	--sl-font: var(--st-font);
+	--sl-font-mono: var(--st-mono);
+	--sl-color-accent-low: #00343b;
+	--sl-color-accent: #00b8cc;
+	--sl-color-accent-high: #8ff3ff;
+	--sl-color-white: #ffffff;
+	--sl-color-gray-1: #eeeeee;
+	--sl-color-gray-2: #e0e0e0;
+	--sl-color-gray-3: #9ca3af;
+	--sl-color-gray-4: #6b6b6b;
+	--sl-color-gray-5: #404040;
+	--sl-color-gray-6: #2d2d2d;
+	--sl-color-black: #1a1a1a;
+}
+:root[data-theme='light'] {
+	--sl-color-accent-low: #c9eefa;
+	--sl-color-accent: #0077b3;
+	--sl-color-accent-high: #00405f;
+	--sl-color-white: #111827;
+	--sl-color-gray-1: #1f2937;
+	--sl-color-gray-2: #374151;
+	--sl-color-gray-3: #4b5563;
+	--sl-color-gray-4: #9ca3af;
+	--sl-color-gray-5: #d1d5db;
+	--sl-color-gray-6: #f3f4f6;
+	--sl-color-gray-7: #f9fafb;
+	--sl-color-black: #ffffff;
+}
+h1, h2, h3 { letter-spacing: -0.015em; }
