@@ -1,5 +1,8 @@
 # straum-io.github.io
 
+[![Site](https://github.com/straum-io/straum-io.github.io/actions/workflows/site.yml/badge.svg?branch=main)](https://github.com/straum-io/straum-io.github.io/actions/workflows/site.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
+
 The website for [Straum](https://github.com/straum-io/straum): the landing
 page and the documentation for the broker,
 [straum-cli](https://github.com/straum-io/straum-cli) and
