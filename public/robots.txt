@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://straum-io.github.io/straum-docs/sitemap-index.xml

@@ -28,6 +28,9 @@ straum revision, change `PIN` and run the build. Offline, point
 `STRAUM_CONFIGURATION` at a local copy of that file.
 
 A push to `main` deploys to GitHub Pages (`.github/workflows/site.yml`).
+A project Pages site cannot serve `robots.txt` at the domain root, so there
+is none; the sitemap is linked from every page's head. Both change with a
+custom domain.
 
 ## Where things are
 
@@ -38,7 +41,7 @@ A push to `main` deploys to GitHub Pages (`.github/workflows/site.yml`).
 | `src/styles/tokens.css` | Brand colors and fonts, shared by the landing page and the docs |
 | `src/styles/starlight.css` | The tokens mapped onto Starlight's theme |
 | `scripts/` | The contract check and the link check |
-| `public/` | Favicon, `robots.txt`, `llms.txt` |
+| `public/` | Favicon, `llms.txt` |
 | `astro.config.mjs` | Site URL and base path, sidebar, head tags |
 
 ## Writing rules

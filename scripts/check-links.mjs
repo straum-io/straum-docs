@@ -1,5 +1,5 @@
-// Every same-site link in the built site, relative or root-relative, must
-// resolve under the base to a file in dist/.
+// Every same-site href and src in the built site, relative or root-relative,
+// must resolve under the base to a file in dist/.
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -11,7 +11,7 @@ const broken = new Set();
 for (const file of readdirSync(dist, { recursive: true })) {
 	if (!file.endsWith('.html')) continue;
 	const pageUrl = new URL(base + file.replace(/(^|\/)index\.html$/, '$1'), origin);
-	for (const [, href] of readFileSync(join(dist, file), 'utf8').matchAll(/href="([^"]*)"/g)) {
+	for (const [, href] of readFileSync(join(dist, file), 'utf8').matchAll(/(?:href|src)="([^"]*)"/g)) {
 		const url = new URL(href, pageUrl);
 		if (url.origin !== origin) continue;
 		const path = decodeURIComponent(url.pathname);
