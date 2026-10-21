@@ -10,13 +10,25 @@ it does not do, so you can decide before you rely on it.
 
 ## Security
 
-- **No authentication, no TLS.** MQTT, the links between nodes and the
-  metrics endpoint are plain TCP without credentials. The credential and
-  ACL code exists but is not wired in.
-- **Loopback by default.** Any other address needs
+- **TLS and credentials only when configured.** Client TLS, a password
+  file, topic rules and node TLS are all off by default. See
+  [Configuration](../../reference/configuration/).
+- **Metrics are plain HTTP** without credentials, on loopback unless
+  `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1`.
+- **Loopback by default.** An address beyond loopback needs TLS (for
+  MQTT: client TLS, a password file and anonymous clients refused; for
+  links: node TLS) or
   `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1`, which is a statement about
   your network, not a security mechanism. Use it only on a private,
   trusted network.
+- **No certificate revocation** for node TLS. Removing a node means
+  giving the others files of a new CA, or new certificates from a CA that
+  never signed the removed node, then `SIGHUP`.
+- **An expired peer certificate keeps its link** until the next `SIGHUP`
+  checks it again.
+- **Handshake floods on the link port** can keep links from forming. That
+  costs availability, not safety; shield the port with a firewall.
+- **No enhanced authentication** (MQTT 5 AUTH).
 
 ## Protocol
 
@@ -39,9 +51,6 @@ it does not do, so you can decide before you rely on it.
 - **A replica far behind cannot catch up.** One that falls more than
   `STRAUM_CLUSTER_RETAIN_BYTES` behind needs a state copy, which is not
   built.
-- **A restarted node can stay behind** and not serve clients
-  ([straum#13](https://github.com/straum-io/straum/issues/13)). The other
-  two keep the cluster available.
 
 ## Upgrades
 
@@ -60,8 +69,8 @@ it does not do, so you can decide before you rely on it.
   retention have not been measured on Linux.
 - **No performance figures yet.** See [Benchmarks](../../project/benchmarks/).
 - **No administrative API.** A planned handoff is a `SIGUSR1` on the
-  node's own host. [straum-console](../../ecosystem/straum-console/) is not
-  started.
+  node's own host. [straum-console](../../ecosystem/straum-console/) is
+  read-only.
 
 If one of these blocks you, use Mosquitto, EMQX, VerneMQ or HiveMQ, and
 watch the [issues](https://github.com/straum-io/straum/issues).

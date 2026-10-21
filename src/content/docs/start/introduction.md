@@ -10,8 +10,8 @@ acknowledges a publish only after a majority of its nodes has committed
 it to one replicated log.
 
 :::caution[Experimental]
-Straum is not production-ready. There is no TLS and no authentication,
-flow control is off, timing defaults are placeholders, and persistent
+Straum is not production-ready. Client TLS, credentials and node TLS
+work only when you configure them, metrics are plain HTTP, flow control is off, timing defaults are placeholders, and persistent
 sessions, wills and session expiry are refused at CONNECT for now. See
 [Limitations](../../project/limitations/).
 :::
@@ -36,7 +36,8 @@ one node dies.
 | PUBACK after majority commit | Yes |
 | Failover and planned handoff of the sequencer | Yes |
 | Prometheus metrics per node | Yes |
-| TLS, credentials, ACLs | Not yet |
+| TLS for clients, credentials, topic rules | Yes, when configured |
+| TLS between nodes, with node identity | Yes, when configured |
 | Single-node mode | No, a cluster has three or more nodes |
 
 The full matrix is in [MQTT support](../../reference/mqtt-support/).
