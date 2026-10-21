@@ -19,4 +19,4 @@
 
 - [straum](https://github.com/straum-io/straum): the broker (Apache 2.0)
 - [straum-cli](https://github.com/straum-io/straum-cli): terminal client (Go)
-- [straum-console](https://github.com/straum-io/straum-console): read-only web console (early: JSON API on loopback, no web pages yet)
+- [straum-console](https://github.com/straum-io/straum-console): read-only web console (early: web pages and a JSON API, on loopback)
