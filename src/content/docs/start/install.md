@@ -15,7 +15,8 @@ nodes can use addresses beyond loopback: MQTT, the links between nodes and
 metrics then run without TLS. Keep that network private. To leave it, set
 [client TLS with a password file](../../reference/configuration/#credentials-and-topic-rules)
 for MQTT and [node TLS](../../reference/configuration/#node-certificates)
-for the links. Metrics are always plain HTTP.
+for the links. Metrics are always plain HTTP, and without
+`STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1` they must stay on loopback.
 :::
 
 ## Docker
@@ -118,9 +119,3 @@ kubectl port-forward svc/straum-mqtt 1883:1883
 
 Pods run as a non-root user with a read-only root filesystem. Service
 links are off, because the server refuses unknown `STRAUM_*` variables.
-
-:::note
-A pod that restarts can stay behind and not serve clients
-([straum#13](https://github.com/straum-io/straum/issues/13)); the other
-two keep the cluster available.
-:::

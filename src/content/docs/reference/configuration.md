@@ -38,7 +38,7 @@ Defaults are starting values. None is measured on Linux yet.
 | `STRAUM_WAL_PREALLOCATE_BYTES` | `0` | Zeros written this far ahead of each log segment's end, 0–1 GiB, so a sync flushes data only. Off by default: its effect is a preliminary measurement on one host, and the setting may change after a confirming run. |
 | `STRAUM_AUTH_PASSWORD_FILE` | off | MQTT credentials, one `user:<hash>` per line. With it, every CONNECT is checked; read again on `SIGHUP`. [Format](#credentials-and-topic-rules). |
 | `STRAUM_AUTH_ACL_FILE` | off | Topic rules. With it, a client may do only what the file grants; read again on `SIGHUP`. [Format](#credentials-and-topic-rules). |
-| `STRAUM_AUTH_ALLOW_ANONYMOUS` | `1` without a password file, `0` with one | Whether a client without a user name is let in. |
+| `STRAUM_AUTH_ALLOW_ANONYMOUS` | `1` without a password file, `0` with one | Whether a client without a user name is let in. A configuration under which no client could connect is refused at startup. |
 | `STRAUM_TLS_CERT_PATH` | off | PEM certificate chain for the MQTT listener. With the key, that listener speaks TLS only. Both or neither; read again on `SIGHUP`. |
 | `STRAUM_TLS_KEY_PATH` | off | Its private key, PEM. |
 | `STRAUM_CLUSTER_TLS_CERT_PATH` | off | This node's certificate for its links. With the next two, every link is TLS 1.3 and both ends prove their node identity. All three or none. [Node certificates](#node-certificates). |
@@ -114,7 +114,9 @@ Node 2 then runs with `STRAUM_CLUSTER_TLS_CERT_PATH=node-2.pem`,
 To renew, issue a new certificate from the same CA, replace the files and
 send `SIGHUP`: no link closes. To remove a node, give every other node
 files of a new CA, then `SIGHUP` each; their links to the removed node
-close. There is no revocation list.
+close; new certificates from a CA that never signed the removed node work
+too. There is no revocation list. A peer certificate that expires keeps
+its link until the next `SIGHUP` checks it.
 
 ## Fixed limits
 

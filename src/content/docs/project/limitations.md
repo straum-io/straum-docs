@@ -15,13 +15,19 @@ it does not do, so you can decide before you rely on it.
   [Configuration](../../reference/configuration/).
 - **Metrics are plain HTTP** without credentials, on loopback unless
   `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1`.
-- **Loopback by default.** An address beyond loopback needs TLS (client
-  TLS with a password file for MQTT, node TLS for links) or
+- **Loopback by default.** An address beyond loopback needs TLS (for
+  MQTT: client TLS, a password file and anonymous clients refused; for
+  links: node TLS) or
   `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1`, which is a statement about
   your network, not a security mechanism. Use it only on a private,
   trusted network.
-- **No certificate revocation** for node TLS. Removing a node means a new
-  CA for the others.
+- **No certificate revocation** for node TLS. Removing a node means
+  giving the others files of a new CA, or new certificates from a CA that
+  never signed the removed node, then `SIGHUP`.
+- **An expired peer certificate keeps its link** until the next `SIGHUP`
+  checks it again.
+- **Handshake floods on the link port** can keep links from forming. That
+  costs availability, not safety; shield the port with a firewall.
 - **No enhanced authentication** (MQTT 5 AUTH).
 
 ## Protocol
