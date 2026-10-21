@@ -101,11 +101,11 @@ reads a socket or a clock, which is what lets the simulation drive it.
 | `gateway` | Sans-IO MQTT gateway: packets in, proposals to the log, committed effects out |
 | `apply` | State derived only from committed records |
 | `storage` | Segmented write-ahead log with group commit |
-| `transport` | TCP listeners, connection lifecycle, socket options |
+| `transport` | TCP and TLS listeners, node certificates, connection lifecycle |
 | `node` | The runtime driver: links, sequencer or replica, log on disk, apply |
 | `sim` | Deterministic simulation of the whole cluster path |
 | `server` | The `straum-server` binary and its configuration |
-| `auth` | Credentials and ACLs; written, not wired in yet |
+| `auth` | Password file and topic rules, checked at CONNECT, SUBSCRIBE and PUBLISH |
 | `domain` | Shared types and pure logic |
 
 ## Testing

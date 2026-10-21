@@ -28,7 +28,9 @@ one packet model with properties and reason codes.
 | Message expiry | Accepted and forwarded, not enforced | Planned |
 | Shared subscriptions | Refused | CONNACK says they are unavailable |
 | Subscription identifiers | Refused | |
-| Username and password, TLS, enhanced authentication | Not available | Written, not wired in |
+| Username and password | Supported | With `STRAUM_AUTH_PASSWORD_FILE`; topic rules with `STRAUM_AUTH_ACL_FILE` |
+| TLS | Supported | With `STRAUM_TLS_*`; TLS only on that listener, never plaintext beside it |
+| Enhanced authentication | Refused | `BadAuthenticationMethod` |
 | WebSocket | Not planned | |
 
 ## Reason codes
@@ -36,16 +38,18 @@ one packet model with properties and reason codes.
 The reason codes the gateway sends by name, in CONNACK, SUBACK and
 DISCONNECT. The authoritative list is in the broker's
 [docs/configuration.md](https://github.com/straum-io/straum/blob/main/docs/configuration.md#stable-names-d-141-a),
-where a test pins it; this copy was taken at revision `4febc1c`.
+where a test pins it; this copy was taken at revision `50224fe`.
 
 <!-- stable-reasons:begin -->
 ```text
 Success
 GrantedQos1
 BadAuthenticationMethod
+BadUserNameOrPassword
 ClientIdentifierNotValid
 ImplementationSpecificError
 KeepAliveTimeout
+NotAuthorized
 ProtocolError
 QosNotSupported
 QuotaExceeded

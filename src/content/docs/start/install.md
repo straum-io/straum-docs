@@ -9,10 +9,13 @@ Every option below runs the same `straum-server` binary, configured with
 `STRAUM_*` environment variables. See
 [Configuration](../../reference/configuration/) for each one.
 
-:::danger[No authentication]
-Containers and real networks need addresses beyond loopback, which
-means setting `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1`. Nothing is
-authenticated or encrypted yet: keep the network private.
+:::danger[Unencrypted unless you configure TLS]
+The examples below set `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1` so the
+nodes can use addresses beyond loopback: MQTT, the links between nodes and
+metrics then run without TLS. Keep that network private. To leave it, set
+[client TLS with a password file](../../reference/configuration/#credentials-and-topic-rules)
+for MQTT and [node TLS](../../reference/configuration/#node-certificates)
+for the links. Metrics are always plain HTTP.
 :::
 
 ## Docker

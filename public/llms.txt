@@ -1,6 +1,6 @@
 # Straum
 
-> Straum is an experimental, clustered MQTT 3.1.1 and 5 broker. It sends a PUBACK only after a majority of its nodes has committed the message to one replicated log. It is not production-ready: no TLS or authentication, QoS 2, persistent sessions, wills and shared subscriptions are not supported, and a cluster needs at least three nodes.
+> Straum is an experimental, clustered MQTT 3.1.1 and 5 broker. It sends a PUBACK only after a majority of its nodes has committed the message to one replicated log. It is not production-ready: TLS and credentials work only when configured; QoS 2, persistent sessions, wills and shared subscriptions are not supported, and a cluster needs at least three nodes.
 
 ## Docs
 

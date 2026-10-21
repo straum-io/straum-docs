@@ -48,6 +48,29 @@ straum-cli sub --broker 127.0.0.1:1883 -t sensors/a -c 1 --wait 5s -o json
 `STRAUM_CLI_BROKER` and `STRAUM_CLI_NODES` save you the flags. There is
 no default cluster: with neither flag nor variable, the command fails.
 
+## Credentials and TLS
+
+Against a node with a password file and client TLS
+([Configuration](../../reference/configuration/#credentials-and-topic-rules)):
+
+```sh
+STRAUM_CLI_PASSWORD=… straum-cli pub --broker node-a:8883 --tls-ca ca.pem \
+  --username alice -t sensors/a -m 21.5
+```
+
+- The user name comes from `--username` or `STRAUM_CLI_USERNAME`.
+- The password comes from `STRAUM_CLI_PASSWORD` or the first line of
+  `--password-file`. There is no password flag, so it never shows in a
+  process list or the shell history.
+- `--tls` checks the node's certificate against the system's CAs;
+  `--tls-ca` trusts a PEM file instead, and `--tls-server-name` sets the
+  name to check. The certificate is always checked.
+- A password to an address beyond loopback needs TLS, or the command
+  stops before connecting.
+- A refusal names its reason: "bad user name or password" or "not
+  authorized". A QoS 0 publish a topic rule refuses is dropped without a
+  refusal, so use `-q 1` to learn the outcome.
+
 ## Exit codes
 
 | Code | Meaning |
