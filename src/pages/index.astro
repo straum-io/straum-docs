@@ -32,8 +32,67 @@ const features = [
 	['MQTT 3.1.1 and 5', 'One packet model with properties and reason codes. QoS 0 and 1, retained messages, MQTT 5 subscription options.'],
 ];
 
-const quickstart = `cargo build --release -p server --bin straum-server
+// The latest published release (straum-io/straum releases, Docker Hub straumio/straum).
+const release = '0.1.0-rc.2';
+const cli = 'go install github.com/straum-io/straum-cli@latest   # Go 1.26 or newer';
+const check = `straum-cli status --node 127.0.0.1:9100,127.0.0.1:9101,127.0.0.1:9102   # wait for SERVING 1
+straum-cli sub --broker 127.0.0.1:1884 -t 'sensors/+' -v &
+straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 
+const installs = [
+	{
+		id: 'docker',
+		label: 'Docker',
+		note: 'Three containers on one machine. Nothing to build.',
+		code: `# 1. Install
+docker pull straumio/straum:${release}
+${cli}
+
+# 2. Start three nodes on a private network
+docker network create --subnet 10.89.42.0/24 straum
+PEERS=0=10.89.42.10:7000,1=10.89.42.11:7000,2=10.89.42.12:7000
+for i in 0 1 2; do
+  docker run -d --name straum-$i --network straum --ip 10.89.42.1$i \\
+    -v straum-$i:/var/lib/straum -p 188$((3 + i)):1883 -p 910$i:9100 \\
+    -e STRAUM_EXPERIMENTAL_CLUSTER=1 -e STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1 \\
+    -e STRAUM_CLUSTER_NODE_ID=$i -e STRAUM_CLUSTER_PEERS=$PEERS \\
+    -e STRAUM_CLUSTER_LISTEN=0.0.0.0:7000 \\
+    -e STRAUM_CLUSTER_MQTT_LISTEN=0.0.0.0:1883 \\
+    -e STRAUM_CLUSTER_METRICS_LISTEN=0.0.0.0:9100 \\
+    straumio/straum:${release}
+done
+
+# 3. Publish and watch
+${check}`,
+	},
+	{
+		id: 'deb',
+		label: 'Debian',
+		note: 'Debian 12 or Ubuntu 22.04 and newer: one node per host, as a systemd service. Repeat on three hosts.',
+		code: `# 1. Install (amd64; arm64 is next to it in the release)
+curl -LO https://github.com/straum-io/straum/releases/download/v${release}/straum_${release.replace('-', '.')}_amd64.deb
+sudo apt install ./straum_${release.replace('-', '.')}_amd64.deb
+
+# 2. Configure this node and start it
+sudoedit /etc/default/straum   # node id, peers, listen addresses
+# beyond loopback: STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1, trusted networks only
+sudo systemctl enable --now straum
+
+# 3. From any host: publish and watch
+${cli}
+straum-cli status --node 10.0.0.10:9100,10.0.0.11:9100,10.0.0.12:9100
+straum-cli pub --broker 10.0.0.10:1883 -t sensors/a -m 21.5`,
+	},
+	{
+		id: 'source',
+		label: 'From source',
+		note: 'Three processes on loopback. Needs Rust 1.85 or newer.',
+		code: `# 1. Build
+git clone https://github.com/straum-io/straum.git && cd straum
+cargo build --release -p server --bin straum-server
+${cli}
+
+# 2. Start three nodes
 export STRAUM_EXPERIMENTAL_CLUSTER=1
 export STRAUM_CLUSTER_PEERS=0=127.0.0.1:7000,1=127.0.0.1:7001,2=127.0.0.1:7002
 for i in 0 1 2; do
@@ -44,9 +103,10 @@ for i in 0 1 2; do
   target/release/straum-server &
 done
 
-# once every node shows SERVING 1:
-straum-cli status --node 127.0.0.1:9100,127.0.0.1:9101,127.0.0.1:9102
-straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
+# 3. Publish and watch
+${check}`,
+	},
+];
 ---
 
 <!doctype html>
@@ -212,15 +272,40 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 
 			<section class="wrap qs">
 				<div>
-					<p class="eyebrow"><span>03</span>Quick start</p>
-					<h2>Three nodes on one machine</h2>
-					<p>You need Rust 1.85 or newer. There is no single-node mode: a cluster starts at three.</p>
-					<p>Every node takes clients. Publish to one, subscribe on another, and run <code>straum-cli status</code> to see who sequences the log.</p>
-					<a class="btn primary" href={u('/start/quick-start/')}>Full quick start</a>
+					<p class="eyebrow"><span>03</span>Install and run</p>
+					<h2>A cluster in three steps</h2>
+					<ol class="steps">
+						<li>
+							<h3>Install</h3>
+							<p>Pull the image, install the <code>.deb</code>, or build from source. Add <code>straum-cli</code> to talk to it.</p>
+						</li>
+						<li>
+							<h3>Start three nodes</h3>
+							<p>There is no single-node mode: a cluster starts at three, and <code>STRAUM_EXPERIMENTAL_CLUSTER=1</code> acknowledges that it is experimental.</p>
+						</li>
+						<li>
+							<h3>Publish and watch</h3>
+							<p><code>pub</code> exits 0 once a majority has committed the message. <code>status</code> shows who sequences the log.</p>
+						</li>
+					</ol>
+					<a class="btn" href={u('/start/install/')}>Install guide</a>
 				</div>
-				<div class="term">
-					<div class="term-bar"><span></span><span></span><span></span><button type="button" class="copy" data-copy={quickstart}>Copy</button></div>
-					<pre><code>{quickstart}</code></pre>
+				<div class="term" data-tabs>
+					<div class="term-bar">
+						<span></span><span></span><span></span>
+						<div class="tabs" role="tablist" aria-label="Install method">
+							{installs.map((t, i) => (
+								<button type="button" role="tab" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{t.label}</button>
+							))}
+						</div>
+						<button type="button" class="copy">Copy</button>
+					</div>
+					{installs.map((t, i) => (
+						<div class="panel" role="tabpanel" id={`panel-${t.id}`} aria-labelledby={`tab-${t.id}`} hidden={i !== 0}>
+							<p class="panel-note">{t.note}</p>
+							<pre><code>{t.code}</code></pre>
+						</div>
+					))}
 				</div>
 			</section>
 
@@ -275,13 +360,34 @@ straum-cli pub --broker 127.0.0.1:1883 -t sensors/a -m 21.5`;
 				document.documentElement.dataset.theme = next;
 				try { localStorage.setItem('starlight-theme', next); } catch {}
 			});
-			document.querySelectorAll<HTMLButtonElement>('.copy').forEach((b) =>
-				b.addEventListener('click', async () => {
-					await navigator.clipboard.writeText(b.dataset.copy ?? '');
-					b.textContent = 'Copied';
-					setTimeout(() => (b.textContent = 'Copy'), 1500);
-				}),
-			);
+			document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((box) => {
+				const tabs = [...box.querySelectorAll<HTMLButtonElement>('[role=tab]')];
+				const select = (tab: HTMLButtonElement) => {
+					for (const t of tabs) {
+						const on = t === tab;
+						t.setAttribute('aria-selected', String(on));
+						t.tabIndex = on ? 0 : -1;
+						box.querySelector<HTMLElement>(`#${t.getAttribute('aria-controls')}`)!.hidden = !on;
+					}
+				};
+				tabs.forEach((t, i) => {
+					t.addEventListener('click', () => select(t));
+					t.addEventListener('keydown', (e) => {
+						const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+						if (!step) return;
+						const next = tabs[(i + step + tabs.length) % tabs.length];
+						select(next);
+						next.focus();
+					});
+				});
+				const copy = box.querySelector<HTMLButtonElement>('.copy')!;
+				copy.addEventListener('click', async () => {
+					const code = box.querySelector('.panel:not([hidden]) code')?.textContent ?? '';
+					await navigator.clipboard.writeText(code);
+					copy.textContent = 'Copied';
+					setTimeout(() => (copy.textContent = 'Copy'), 1500);
+				});
+			});
 		</script>
 	</body>
 </html>

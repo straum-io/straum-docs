@@ -1,6 +1,6 @@
 ---
 title: Install
-description: Run Straum with Docker, from the Debian packages and PPA, or on Kubernetes with the Kustomize package.
+description: Run Straum from the Docker image, the Debian packages, or on Kubernetes with the Kustomize package.
 sidebar:
   order: 3
 ---
@@ -18,9 +18,17 @@ authenticated or encrypted yet: keep the network private.
 ## Docker
 
 The image is about 40 MB, built on a distroless base, and runs as a
-non-root user.
+non-root user. Release candidates are on Docker Hub as
+[`straumio/straum`](https://hub.docker.com/r/straumio/straum) for
+`linux/amd64` and `linux/arm64`, with provenance and an SBOM attached:
 
-From a checkout of [straum-io/straum](https://github.com/straum-io/straum):
+```sh
+docker pull straumio/straum:0.1.0-rc.2
+docker tag straumio/straum:0.1.0-rc.2 straum
+```
+
+Or build it from a checkout of
+[straum-io/straum](https://github.com/straum-io/straum):
 
 ```sh
 docker build -t straum .
@@ -51,23 +59,17 @@ Ports map as in the [quick start](../../start/quick-start/): MQTT on
 and picks up where it left off after a restart. Peers are IP addresses:
 the node does not resolve host names.
 
-The release workflow publishes tagged versions to Docker Hub for
-`linux/amd64` and `linux/arm64`, with provenance and an SBOM attached.
-Only release candidates are tagged so far.
-
 ## Debian and Ubuntu
 
-On Ubuntu 22.04, 24.04 and 26.04, the PPA keeps Straum up to date (amd64
-and arm64):
+Each [GitHub release](https://github.com/straum-io/straum/releases) has
+`.deb` packages for amd64 and arm64 (Debian 12, Ubuntu 22.04 and newer)
+with `SHA256SUMS` and build provenance. The latest is `v0.1.0-rc.2`:
 
 ```sh
-sudo add-apt-repository ppa:straum/straum
-sudo apt install straum
+curl -LO https://github.com/straum-io/straum/releases/download/v0.1.0-rc.2/straum_0.1.0.rc.2_amd64.deb
 ```
 
-Otherwise each [GitHub release](https://github.com/straum-io/straum/releases)
-has `.deb` packages for amd64 and arm64 (Debian 12, Ubuntu 22.04 and
-newer) with `SHA256SUMS` and build provenance.
+An Ubuntu PPA (`ppa:straum/straum`) is planned but not published yet.
 
 The package installs `/usr/bin/straum-server`, a `straum` systemd
 service and its settings file. It starts nothing by itself:
