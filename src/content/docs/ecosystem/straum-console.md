@@ -93,14 +93,42 @@ filter, so a filtered list never looks complete when events were missed.
 
 ![The keyboard shortcuts dialog over the Overview](../../../assets/console/keys.png)
 
-## Try it
+## Install
 
-You need Go 1.26 and the metrics endpoint on each node
-(`STRAUM_CLUSTER_METRICS_LISTEN`).
+No release is published yet, so for now build from source. Once one is,
+any of these works:
+
+```sh
+# Linux or macOS: the release archive for this machine, checked against the
+# release's checksums. --user installs into ~/.local; --systemd adds an
+# example unit on Linux, not enabled.
+curl -fsSL https://raw.githubusercontent.com/straum-io/straum-console/main/install.sh | sh
+
+# Docker on a Linux host, with the host's network:
+docker run --network host straumio/straum-console --node 0=127.0.0.1:9100
+
+# The archives for Linux, macOS and Windows on amd64 and arm64:
+# https://github.com/straum-io/straum-console/releases
+```
+
+`uninstall.sh` removes what `install.sh` installed, the systemd unit
+included. The image needs the host's network: the console listens on
+loopback only, because it has no authentication, so a published port
+(`docker run -p`) cannot reach it.
+
+From source, with Go 1.26:
 
 ```sh
 git clone https://github.com/straum-io/straum-console && cd straum-console
 make build
+```
+
+## Try it
+
+You need the metrics endpoint on each node
+(`STRAUM_CLUSTER_METRICS_LISTEN`).
+
+```sh
 bin/straum-console --node 0=127.0.0.1:9100,1=127.0.0.1:9101,2=127.0.0.1:9102
 ```
 
