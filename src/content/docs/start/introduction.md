@@ -10,9 +10,10 @@ acknowledges a publish only after a majority of its nodes has committed
 it to one replicated log.
 
 :::caution[Experimental]
-Straum is not production-ready. Client TLS, credentials and node TLS
-work only when you configure them, metrics are plain HTTP, flow control is off, timing defaults are placeholders, and persistent
-sessions, wills and session expiry are refused at CONNECT for now. See
+Straum is not production-ready: flow control is off, failover and
+performance are not yet confirmed by Linux measurements, timing defaults
+are placeholders, and persistent sessions, wills and session expiry are
+refused at CONNECT for now. TLS and credentials work, off by default. See
 [Limitations](../../project/limitations/).
 :::
 
