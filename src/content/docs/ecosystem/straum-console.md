@@ -11,8 +11,9 @@ node it came from and how old it is. It is early and experimental, like
 the broker.
 
 :::caution[Early]
-Three pages so far: Overview, Cluster & Leader and Events. Replication,
-configuration and what the broker does not expose come next.
+Six pages: Overview, Cluster & Leader, Replication & Durability, Events,
+Configuration, and "Not exposed by the core", which lists what the console
+cannot show yet and the broker change that would let it.
 :::
 
 ![The Overview screen of a three-node cluster: two nodes observed, node 0 reporting leading; node 2 unknown after it was stopped, its last values dimmed with their age; recent events: node 2 unreachable, a leading change after a handoff, the highest slot changing](../../../assets/console-overview.png)
