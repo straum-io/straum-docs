@@ -10,9 +10,8 @@ acknowledges a publish only after a majority of its nodes has committed
 it to one replicated log.
 
 :::note[Early and experimental]
-Straum is ready to try, test and build against, but not yet for
-production. TLS, credentials and topic rules work when you turn them on.
-Still to come: flow control, Linux measurements of failover and
+Straum is ready to try and test, but not yet for production. TLS, credentials and topic rules work when you turn them on.
+Still to come: flow control, published Linux measurements of failover and
 performance, tuned timing defaults, and persistent sessions, wills and
 session expiry. [Limitations](../../project/limitations/) has the full
 list.
@@ -52,7 +51,7 @@ The full matrix is in [MQTT support](../../reference/mqtt-support/).
 - Teams that need a replicated broker under a permissive license
   without a JVM or BEAM runtime.
 
-Today it suits evaluation, test rigs, prototypes and anyone who wants to
+Today it suits evaluation, test rigs and anyone who wants to
 follow the project or help shape it.
 
 ## When goals conflict
@@ -75,10 +74,10 @@ process), or a server for protocols other than MQTT.
 
 ## Compared with others
 
-Mosquitto, EMQX, VerneMQ and HiveMQ are mature brokers and the safe pick
-for production today. Straum takes a different road: an MQTT cluster
-whose behavior follows from one replicated log. If that is what you
-want, try it and tell us what you need in an
-[Issue](https://github.com/straum-io/straum/issues).
+Straum takes its own road: an MQTT cluster whose behavior follows from
+one replicated log. If that is what you want, try it and tell us what
+you need in an [Issue](https://github.com/straum-io/straum/issues). For
+production today, use Mosquitto on a single node, or a clustered broker
+such as EMQX, VerneMQ or HiveMQ.
 
 Next: [run a three-node cluster](../../start/quick-start/).

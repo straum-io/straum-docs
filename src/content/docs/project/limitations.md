@@ -5,8 +5,8 @@ sidebar:
   order: 1
 ---
 
-Straum is young and experimental: ready to try, test and build against,
-not yet for production. Today it has majority commit, failover
+Straum is young and experimental: ready to try and test, not yet for
+production. Today it has majority commit, failover
 and handoff, MQTT 3.1.1 and 5 with QoS 0 and 1, retained messages, TLS
 and access control. This page lists what is not there yet, so you know
 what to expect.
@@ -41,8 +41,10 @@ What they do not cover:
 ## Protocol
 
 - QoS 2 is not supported yet.
-- Persistent sessions, wills and session expiry are not supported yet;
-  connect with a clean session.
+- Persistent sessions, wills and session expiry are not supported yet:
+  the broker refuses a CONNECT that asks for them. Connect with a clean
+  session (MQTT 3.1.1) or a Session Expiry Interval of 0 (MQTT 5), and
+  without a will.
 - Message expiry is accepted and forwarded but not enforced.
 - One live session per client id is enforced per node, not across the
   cluster.
@@ -83,5 +85,5 @@ What they do not cover:
 
 If one of these blocks you, tell us in an
 [Issue](https://github.com/straum-io/straum/issues): it helps decide what
-comes next. For production today, Mosquitto, EMQX, VerneMQ and HiveMQ are
-mature options.
+comes next. For production today, use Mosquitto on a single node, or a
+clustered broker such as EMQX, VerneMQ or HiveMQ.

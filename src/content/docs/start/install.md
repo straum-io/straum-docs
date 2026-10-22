@@ -9,11 +9,12 @@ Every option below runs the same `straum-server` binary, configured with
 `STRAUM_*` environment variables. See
 [Configuration](../../reference/configuration/) for each one.
 
-:::caution[Plain text on a private network]
+:::caution[No encryption or authentication in these examples]
 To keep the examples short, they set `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1`
 so the nodes can use addresses beyond loopback: MQTT, the links between
-nodes and metrics then run without TLS. Use them on a private, trusted
-network. To go further, turn on
+nodes and metrics then run without TLS and without credentials. Run them
+only on a private, trusted network. Before anything else can reach it,
+turn on
 [client TLS with a password file](../../reference/configuration/#credentials-and-topic-rules)
 for MQTT and [node TLS](../../reference/configuration/#node-certificates)
 for the links. Metrics are always plain HTTP, and without

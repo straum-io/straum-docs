@@ -242,7 +242,7 @@ ${check}`,
 			<div class="wrap">
 			<aside class="status" aria-label="Project status">
 				<strong>Early and experimental.</strong>{' '}
-				Ready to try, test and build against, not yet for production. Still to come: flow control, Linux
+				Ready to try and test, not yet for production. Still to come: flow control, published Linux
 				measurements of failover and performance, tuned timing defaults, persistent sessions and wills.
 				<a href={u('/project/limitations/')}>What's not there yet →</a>
 			</aside>
@@ -343,10 +343,10 @@ ${check}`,
 				<p class="eyebrow"><span>05</span>Where it fits</p>
 					<h2>Compared with others</h2>
 				<p>
-					Mosquitto, EMQX, VerneMQ and HiveMQ are mature brokers, and the safe pick for production today. Straum
-					takes a different road: an MQTT cluster whose behavior follows from one replicated log, in a single Rust
+					Straum takes its own road: an MQTT cluster whose behavior follows from one replicated log, in a single Rust
 					binary with no JVM or BEAM runtime. If that is the broker you want, try it, tell us what you need in an
-					<a href={`${gh}/straum/issues`}>Issue</a>, and help shape it.
+					<a href={`${gh}/straum/issues`}>Issue</a>, and help shape it. For production today, use Mosquitto on a single node, or a clustered broker
+					such as EMQX, VerneMQ or HiveMQ.
 				</p>
 			</section>
 		</main>
