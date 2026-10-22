@@ -35,7 +35,7 @@ Defaults are starting values. None is measured on Linux yet.
 | `STRAUM_CLUSTER_TAKEOVER_TICKS` | `3` | Heartbeats of silence before a takeover, 1–1 000. A starting value. At least `4` with node TLS, or the start is refused. |
 | `STRAUM_CLUSTER_RETAIN_BYTES` | `67108864` | How much log is kept behind a slow replica (64 MiB). |
 | `STRAUM_READ_BYTES` | `65536` | One catch-up or fetch read. At most 4 MiB. |
-| `STRAUM_WAL_PREALLOCATE_BYTES` | `0` | Zeros written this far ahead of each log segment's end, 0–1 GiB, so a sync flushes data only. Off by default: its effect is a preliminary measurement on one host, and the setting may change after a confirming run. |
+| `STRAUM_WAL_PREALLOCATE_BYTES` | `8388608` (8 MiB) | Zeros written this far ahead of each log segment's end, 0–1 GiB, so a sync flushes data only. On by default since a run on an accepted host confirmed the gain: on that host (ext4 on a SATA disk) steady acknowledged publishes per second went from about 1 800 to about 4 500. One host and one filesystem, so no precise gain is claimed elsewhere; XFS, Btrfs and ZFS are not measured. On a copy-on-write filesystem (Btrfs, ZFS) no benefit is expected: set `0` there, which turns it off. |
 | `STRAUM_AUTH_PASSWORD_FILE` | off | MQTT credentials, one `user:<hash>` per line. With it, every CONNECT is checked; read again on `SIGHUP`. [Format](#credentials-and-topic-rules). |
 | `STRAUM_AUTH_ACL_FILE` | off | Topic rules. With it, a client may do only what the file grants; read again on `SIGHUP`. [Format](#credentials-and-topic-rules). |
 | `STRAUM_AUTH_ALLOW_ANONYMOUS` | `1` without a password file, `0` with one | Whether a client without a user name is let in. A configuration under which no client could connect is refused at startup. |
@@ -164,4 +164,4 @@ Clients outside the cluster may rely on the variable names above, the
 in [MQTT support](../../reference/mqtt-support/#reason-codes). The
 authoritative lists are in the broker's
 [docs/configuration.md](https://github.com/straum-io/straum/blob/main/docs/configuration.md), each pinned by a test there.
-These pages copy them at revision `55e8a1d`.
+These pages copy them at revision `26fd82e`.

@@ -38,7 +38,7 @@ one packet model with properties and reason codes.
 The reason codes the gateway sends by name, in CONNACK, SUBACK and
 DISCONNECT. The authoritative list is in the broker's
 [docs/configuration.md](https://github.com/straum-io/straum/blob/main/docs/configuration.md#stable-names-d-141-a),
-where a test pins it; this copy was taken at revision `55e8a1d`.
+where a test pins it; this copy was taken at revision `26fd82e`.
 
 <!-- stable-reasons:begin -->
 ```text
