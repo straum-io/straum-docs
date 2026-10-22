@@ -18,7 +18,7 @@ cargo build --release -p server --bin straum-server
 
 ## Start three nodes
 
-There is no single-node mode. Three nodes on loopback:
+A cluster starts at three nodes. Here all three run on loopback:
 
 ```sh
 export STRAUM_EXPERIMENTAL_CLUSTER=1
@@ -32,8 +32,8 @@ for i in 0 1 2; do
 done
 ```
 
-`STRAUM_EXPERIMENTAL_CLUSTER=1` is required: without it the server
-refuses to start. Each node serves MQTT on `1883`, `1884` and `1885`,
+`STRAUM_EXPERIMENTAL_CLUSTER=1` opts in to the experimental cluster;
+without it the server stops at startup with an error that says so. Each node serves MQTT on `1883`, `1884` and `1885`,
 and metrics on `9100`, `9101` and `9102`.
 
 ## Publish and subscribe
@@ -81,6 +81,6 @@ on purpose instead, send `SIGUSR1` to the leading node's process.
 | The server refuses a non-loopback address | Listeners and peers stay on loopback unless `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK=1`, or TLS secures them: the MQTT listener with client TLS and a password file, the links with node TLS. |
 | A node refuses a peer's link | The nodes disagree on peers, timing or limits: these go into a configuration digest each link checks. |
 | A node refuses its data directory | The directory belongs to another cluster's configuration. Use a fresh one. |
-| A CONNECT is refused | Persistent sessions, wills and session expiry are not supported yet. Connect with a clean session. |
+| A CONNECT is refused | Persistent sessions, wills and session expiry are not supported yet. Connect with a clean session (MQTT 3.1.1) or a Session Expiry Interval of 0 (MQTT 5), and without a will. |
 
 Next: [install with Docker, Debian packages or Kubernetes](../../start/install/).

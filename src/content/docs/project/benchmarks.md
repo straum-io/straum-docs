@@ -5,9 +5,9 @@ sidebar:
   order: 2
 ---
 
-There are **no published performance figures for Straum yet**. Numbers
-come only from runs on bare-metal Linux, with a recorded host and noise
-floor, and no host has passed that bar so far. A figure from macOS or
+Performance figures are not published yet. Straum quotes numbers only
+from runs on bare-metal Linux with a recorded host, workload, noise
+floor and raw data, and none is published yet. A figure from macOS or
 Docker is preliminary and is not quoted here.
 
 ## What gets measured

@@ -23,7 +23,7 @@ Defaults are starting values. None is measured on Linux yet.
 
 | Variable | Default | Notes |
 |---|---|---|
-| `STRAUM_EXPERIMENTAL_CLUSTER` | unset | Must be `1`: you acknowledge the server is experimental. Anything else is refused. |
+| `STRAUM_EXPERIMENTAL_CLUSTER` | unset | Set to `1` to opt in to the experimental cluster. The server does not start without it. |
 | `STRAUM_CLUSTER_NODE_ID` | required | This node's id, 0–255. |
 | `STRAUM_CLUSTER_PEERS` | required | Every voter, this node included: `id=address,…` as socket addresses. Odd, at least three, no id twice. |
 | `STRAUM_CLUSTER_LISTEN` | this node's address in the peers | Where its links to other nodes listen. It and the peers may be beyond loopback when the three `STRAUM_CLUSTER_TLS_*` are set. |
@@ -31,8 +31,8 @@ Defaults are starting values. None is measured on Linux yet.
 | `STRAUM_CLUSTER_METRICS_LISTEN` | off | Plain-HTTP Prometheus text, no credentials. At most 4 scrapes at once, each read and write bounded by 2 s. A diagnostic interface, not a monitoring system. |
 | `STRAUM_CLUSTER_UNAUTHENTICATED_NETWORK` | `0` | `1` lets every listener and peer use addresses beyond loopback, without TLS where TLS is not configured. For an isolated, trusted network only. Without it such an address is refused at startup, except where TLS secures it (the two rows above). Metrics are never encrypted. |
 | `STRAUM_CLUSTER_DATA_DIR` | required | The log, snapshots, and a file pinning the directory to its cluster's configuration. |
-| `STRAUM_CLUSTER_HEARTBEAT_MS` | `50` | 1–10 000. A placeholder, not a recommendation. |
-| `STRAUM_CLUSTER_TAKEOVER_TICKS` | `3` | Heartbeats of silence before a takeover, 1–1 000. A placeholder. At least `4` with node TLS, or the start is refused. |
+| `STRAUM_CLUSTER_HEARTBEAT_MS` | `50` | 1–10 000. A starting value, not yet tuned on Linux. |
+| `STRAUM_CLUSTER_TAKEOVER_TICKS` | `3` | Heartbeats of silence before a takeover, 1–1 000. A starting value. At least `4` with node TLS, or the start is refused. |
 | `STRAUM_CLUSTER_RETAIN_BYTES` | `67108864` | How much log is kept behind a slow replica (64 MiB). |
 | `STRAUM_READ_BYTES` | `65536` | One catch-up or fetch read. At most 4 MiB. |
 | `STRAUM_WAL_PREALLOCATE_BYTES` | `0` | Zeros written this far ahead of each log segment's end, 0–1 GiB, so a sync flushes data only. Off by default: its effect is a preliminary measurement on one host, and the setting may change after a confirming run. |

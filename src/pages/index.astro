@@ -241,9 +241,10 @@ ${check}`,
 
 			<div class="wrap">
 			<aside class="status" aria-label="Project status">
-				<strong>Not production-ready.</strong>{' '}
-				Flow control off, failover and performance not yet confirmed by Linux measurements, timing defaults are
-				placeholders, and persistent sessions and wills are refused. <a href={u('/project/limitations/')}>Read the limitations →</a>
+				<strong>Early and experimental.</strong>{' '}
+				Ready to try and test, not yet for production. Still to come: flow control, published Linux
+				measurements of failover and performance, tuned timing defaults, persistent sessions and wills.
+				<a href={u('/project/limitations/')}>What's not there yet →</a>
 			</aside>
 			</div>
 
@@ -288,7 +289,7 @@ ${check}`,
 						</li>
 						<li>
 							<h3>Start three nodes</h3>
-							<p>There is no single-node mode: a cluster starts at three, and <code>STRAUM_EXPERIMENTAL_CLUSTER=1</code> acknowledges that it is experimental.</p>
+							<p>A cluster starts at three nodes, all on one machine if you like. <code>STRAUM_EXPERIMENTAL_CLUSTER=1</code> opts in to the experimental cluster.</p>
 						</li>
 						<li>
 							<h3>Publish and watch</h3>
@@ -339,12 +340,13 @@ ${check}`,
 			</section>
 
 			<section class="wrap others">
-				<p class="eyebrow"><span>05</span>Honest comparison</p>
+				<p class="eyebrow"><span>05</span>Where it fits</p>
 					<h2>Compared with others</h2>
 				<p>
-					Need a broker in production today? Use Mosquitto on a single node, or a clustered broker such as EMQX,
-					VerneMQ or HiveMQ. Straum is for people who want an MQTT cluster whose behavior follows from one log, without
-					a JVM or BEAM runtime, and want to follow or help with getting there.
+					Straum takes its own road: an MQTT cluster whose behavior follows from one replicated log, in a single Rust
+					binary with no JVM or BEAM runtime. If that is the broker you want, try it, tell us what you need in an
+					<a href={`${gh}/straum/issues`}>Issue</a>, and help shape it. For production today, use Mosquitto on a single node, or a clustered broker
+					such as EMQX, VerneMQ or HiveMQ.
 				</p>
 			</section>
 		</main>
