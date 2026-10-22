@@ -12,7 +12,7 @@ majority of nodes holds it durably. With three nodes, any one can die
 and every acknowledged message survives.
 
 A QoS 0 publish is written to the connection and nothing confirms it.
-QoS 2 is refused.
+QoS 2 is not supported yet.
 
 If the connection breaks before the PUBACK arrives, the outcome is
 unknown: the message may or may not be committed, and publishing it

@@ -18,7 +18,7 @@ cargo build --release -p server --bin straum-server
 
 ## Start three nodes
 
-There is no single-node mode. Three nodes on loopback:
+A cluster starts at three nodes. Here all three run on loopback:
 
 ```sh
 export STRAUM_EXPERIMENTAL_CLUSTER=1
@@ -32,8 +32,8 @@ for i in 0 1 2; do
 done
 ```
 
-`STRAUM_EXPERIMENTAL_CLUSTER=1` is required: without it the server
-refuses to start. Each node serves MQTT on `1883`, `1884` and `1885`,
+`STRAUM_EXPERIMENTAL_CLUSTER=1` opts in to the experimental cluster; the
+server asks for it at startup. Each node serves MQTT on `1883`, `1884` and `1885`,
 and metrics on `9100`, `9101` and `9102`.
 
 ## Publish and subscribe

@@ -9,12 +9,13 @@ Straum is a distributed MQTT broker. A Straum cluster
 acknowledges a publish only after a majority of its nodes has committed
 it to one replicated log.
 
-:::caution[Experimental]
-Straum is not production-ready: flow control is off, failover and
-performance are not yet confirmed by Linux measurements, timing defaults
-are placeholders, and persistent sessions, wills and session expiry are
-refused at CONNECT for now. TLS and credentials work, off by default. See
-[Limitations](../../project/limitations/).
+:::note[Early and experimental]
+Straum is ready to try, test and build against, but not yet for
+production. TLS, credentials and topic rules work when you turn them on.
+Still to come: flow control, Linux measurements of failover and
+performance, tuned timing defaults, and persistent sessions, wills and
+session expiry. [Limitations](../../project/limitations/) has the full
+list.
 :::
 
 ## Why it exists
@@ -39,7 +40,7 @@ one node dies.
 | Prometheus metrics per node | Yes |
 | TLS for clients, credentials, topic rules | Yes, when configured |
 | TLS between nodes, with node identity | Yes, when configured |
-| Single-node mode | No, a cluster has three or more nodes |
+| Single-node mode | No: a cluster starts at three nodes, which can share one machine |
 
 The full matrix is in [MQTT support](../../reference/mqtt-support/).
 
@@ -50,6 +51,9 @@ The full matrix is in [MQTT support](../../reference/mqtt-support/).
 - Edge-to-cloud gateways that want a small, predictable binary.
 - Teams that need a replicated broker under a permissive license
   without a JVM or BEAM runtime.
+
+Today it suits evaluation, test rigs, prototypes and anyone who wants to
+follow the project or help shape it.
 
 ## When goals conflict
 
@@ -62,7 +66,7 @@ This order wins:
 4. Performance per CPU cycle, measured.
 5. Protocol coverage.
 
-## What it won't become
+## What it is not trying to be
 
 A benchmark winner at the cost of those guarantees, a rule engine or
 integration hub, a broker with a management UI built in (that is
@@ -71,9 +75,10 @@ process), or a server for protocols other than MQTT.
 
 ## Compared with others
 
-Need a broker in production today? Use Mosquitto on a single node, or a
-clustered broker such as EMQX, VerneMQ or HiveMQ. Straum is for people
-who want an MQTT cluster whose behavior follows from one log, and want
-to follow or help with getting there.
+Mosquitto, EMQX, VerneMQ and HiveMQ are mature brokers and the safe pick
+for production today. Straum takes a different road: an MQTT cluster
+whose behavior follows from one replicated log. If that is what you
+want, try it and tell us what you need in an
+[Issue](https://github.com/straum-io/straum/issues).
 
 Next: [run a three-node cluster](../../start/quick-start/).

@@ -1,12 +1,15 @@
 ---
 title: Limitations
-description: What Straum does not do yet. Straum is experimental and not production-ready.
+description: What Straum does not do yet, so you know what to expect from an experimental broker.
 sidebar:
   order: 1
 ---
 
-Straum is experimental and **not production-ready**. This page lists what
-it does not do, so you can decide before you rely on it.
+Straum is young and experimental: ready to try, test and build against,
+not yet for production. Today it has majority commit, failover
+and handoff, MQTT 3.1.1 and 5 with QoS 0 and 1, retained messages, TLS
+and access control. This page lists what is not there yet, so you know
+what to expect.
 
 ## Security
 
@@ -37,18 +40,19 @@ What they do not cover:
 
 ## Protocol
 
-- QoS 2 is refused.
-- Persistent sessions, wills and session expiry are refused.
+- QoS 2 is not supported yet.
+- Persistent sessions, wills and session expiry are not supported yet;
+  connect with a clean session.
 - Message expiry is accepted and forwarded but not enforced.
 - One live session per client id is enforced per node, not across the
   cluster.
-- Shared subscriptions and subscription identifiers are refused.
+- Shared subscriptions and subscription identifiers are not supported yet.
 - No WebSocket transport.
 
 ## Cluster
 
-- **At least three nodes.** There is no single-node mode, and the voter
-  count must be odd.
+- **At least three nodes.** A cluster starts at three (they can share
+  one machine), and the voter count is odd.
 - **Static membership.** The peers are fixed at startup; there is no way
   to add or remove a node from a running cluster.
 - **Peers are IP addresses.** Host names are not resolved.
@@ -70,12 +74,14 @@ What they do not cover:
 
 ## Operations
 
-- **Timing defaults are placeholders.** Heartbeat, takeover ticks and log
-  retention have not been measured on Linux.
+- **Timing defaults are starting values.** Heartbeat, takeover ticks and
+  log retention have not been tuned on Linux yet.
 - **No performance figures yet.** See [Benchmarks](../../project/benchmarks/).
 - **No administrative API.** A planned handoff is a `SIGUSR1` on the
   node's own host. [straum-console](../../ecosystem/straum-console/) is
   read-only.
 
-If one of these blocks you, use Mosquitto, EMQX, VerneMQ or HiveMQ, and
-watch the [issues](https://github.com/straum-io/straum/issues).
+If one of these blocks you, tell us in an
+[Issue](https://github.com/straum-io/straum/issues): it helps decide what
+comes next. For production today, Mosquitto, EMQX, VerneMQ and HiveMQ are
+mature options.
