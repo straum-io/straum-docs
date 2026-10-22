@@ -5,9 +5,13 @@ name: core-drift
 # lines? If so, one open Issue labelled core-drift says what moved and what
 # the contract check reports against main; once the pin catches up, it is
 # closed. The site itself is not changed here.
+#
+# The schedule is paused while straum main has no docs/configuration.md (its
+# history is under the tag archive/main-2026-10-23). Restore it with
+#   schedule:
+#     - cron: '17 5 * * *'
+# once the file is back.
 on:
-  schedule:
-    - cron: '17 5 * * *'
   workflow_dispatch:
 
 permissions:
